@@ -1,6 +1,7 @@
 package com.customview.wl.hgwxrcustom.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -8,7 +9,10 @@ import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
+
+import com.customview.wl.hgwxrcustom.R;
 
 /**
  * @author wl
@@ -26,6 +30,12 @@ public class PaoPaoView  extends View {
 
     private  String  textData;
     private  int  defaultHeight=15;
+
+    private   int textAlign=0;
+
+    private  int textColor;
+    private  int textSize;
+    private  int  bgColor;
     public PaoPaoView(Context context) {
         this(context,null);
     }
@@ -37,6 +47,38 @@ public class PaoPaoView  extends View {
     public PaoPaoView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
+        /**
+         * 获得我们所定义的自定义样式属性
+         */
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.PaoPaoView, defStyleAttr, 0);
+        int n = a.getIndexCount();
+        for (int i = 0; i < n; i++)
+        {
+            int attr = a.getIndex(i);
+            switch (attr)
+            {
+                case R.styleable.PaoPaoView_textColor:
+                    // 默认颜色设置为黑色
+                    textColor = a.getColor(attr, Color.BLACK);
+                    break;
+                case R.styleable.PaoPaoView_backgroudColor:
+                    // 默认颜色设置为黑色
+                    bgColor = a.getColor(attr, Color.WHITE);
+                    break;
+                case R.styleable.PaoPaoView_text:
+                    textData = a.getString(attr);
+                    break;
+                case R.styleable.PaoPaoView_textSize:
+                    // 默认设置为16sp，TypeValue也可以把sp转化为px
+                    textSize = a.getDimensionPixelSize(attr, (int) TypedValue.applyDimension(
+                            TypedValue.COMPLEX_UNIT_SP, 16, getResources().getDisplayMetrics()));
+                    break;
+
+            }
+
+        }
+        a.recycle();
+
     }
 
     private void init() {
@@ -45,12 +87,10 @@ public class PaoPaoView  extends View {
         mPaint.setAntiAlias(true);
         // 防抖动
         mPaint.setDither(true);
-        mPaint.setColor(Color.BLUE);
 
         point1 = new Point();
         point2 = new Point();
         point3 = new Point();
-        textData="测试数据";
     }
     private int connMeasure(int measureSpec,int defaultSize) {
         /**
@@ -114,6 +154,7 @@ public class PaoPaoView  extends View {
          ry：y方向上的圆角半径。
          paint：绘制时所使用的画笔。
          */
+        mPaint.setColor(bgColor);
         canvas.drawRoundRect(rectF,10,10,mPaint);
         canvas.restore();
         canvas.save();
@@ -129,7 +170,7 @@ public class PaoPaoView  extends View {
 
         int  baseLineX=0;
         int  baseLineY=Math.min(width/2,height/2);
-        mPaint.setColor(Color.WHITE);
+        mPaint.setColor(textColor==0? Color.BLACK:textColor);
         mPaint.setTextSize(Math.min(width/textData.length(),height/textData.length()));
         canvas.drawText(textData,baseLineX,baseLineY,mPaint);
         canvas.restore();

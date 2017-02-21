@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -41,6 +42,7 @@ public class PaoPaoView extends View {
     private final int RIGHT = 2;
     private final int DOWN = 3;
     private RectF rectF;
+    private Rect bounds;
 
     public PaoPaoView(Context context) {
         this(context, null);
@@ -75,7 +77,6 @@ public class PaoPaoView extends View {
         mPaint.setAntiAlias(true);
         // 防抖动
         mPaint.setDither(true);
-
         point1 = new Point();
         point2 = new Point();
         point3 = new Point();
@@ -113,8 +114,6 @@ public class PaoPaoView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-
         //p3(width/2,height+defaultHeight)  p2(width-(defaultHeight/Math.sqrt(3)),height) p1(width-(defaultHeight/Math.sqrt(3)),height)
         switch (angleAlign) {
             case LEFT:
@@ -162,6 +161,7 @@ public class PaoPaoView extends View {
                 point3.y = height + defaultHeight;
                 break;
         }
+
 
 
     }
@@ -212,6 +212,7 @@ public class PaoPaoView extends View {
             baseLineX = defaultHeight * 2;
         int baseLineY = Math.min(width / 2, height / 2);
         mPaint.setColor(textColor == 0 ? Color.BLACK : textColor);
+//        mPaint.getTextBounds(textData,0,textData.length(), bounds);
         mPaint.setTextSize(Math.min(width / textData.length(), height / textData.length()));
         canvas.drawText(textData, baseLineX, baseLineY, mPaint);
         canvas.restore();

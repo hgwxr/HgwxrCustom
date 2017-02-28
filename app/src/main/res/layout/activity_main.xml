@@ -27,4 +27,27 @@
     <com.customview.wl.hgwxrcustom.widget.NinePartView
         android:layout_width="match_parent"
         android:layout_height="300dp" />
+   <!-- <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+        <TextView
+            android:id="@+id/top"
+            android:background="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+        <TextView
+            android:layout_below="@id/top"
+            android:id="@+id/down"
+            android:background="@color/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="70dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>-->
 </RelativeLayout>

@@ -85,7 +85,7 @@ public class NinePartView extends View {
         bitmapShader.setLocalMatrix(matrix);
         mPaint.setShader(bitmapShader);
         rectF=new RectF(0,0,width,height/4*3+height/4*(2/4));
-        rectFDown = new RectF(0,height/4*3+height/4*(2/4),width,height);
+        rectFDown = new RectF(0,height/4*3,width,height);
     }
 
     @Override
